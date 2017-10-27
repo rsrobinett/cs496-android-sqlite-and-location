@@ -1,5 +1,6 @@
 package edu.oregonstate.rsrobinett.sqliteandlocation;
 
+import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,7 @@ public class PermissionServices extends AppCompatActivity {
 
 
     private final NavigationServices _navigationServices;
+    private LauncherApps.Callback mCallback;
 
     public PermissionServices() {
         _navigationServices = new NavigationServices();
@@ -62,8 +64,7 @@ public class PermissionServices extends AppCompatActivity {
                             result_text += "false ";
                         }
                     }
-
-                    _navigationServices.updateLocation();
+                    //_navigationServices.updateLocation();
 
                 } else {
 

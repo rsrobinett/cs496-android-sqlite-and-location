@@ -17,4 +17,6 @@ public class Constants {
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
             android.Manifest.permission.ACCESS_FINE_LOCATION};
 
+    public static final double DEFAULT_LONGITUDE = 44.5;
+    public static final double DEFAULT_LATITUDE = -123.2;
 }

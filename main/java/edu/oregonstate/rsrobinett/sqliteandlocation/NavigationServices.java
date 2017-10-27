@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.location.LocationServices.*;
 import static edu.oregonstate.rsrobinett.sqliteandlocation.Constants.LOCATION_PERMISSION_LIST;
 import static edu.oregonstate.rsrobinett.sqliteandlocation.Constants.LOCATION_PERMISSION_RESULT;
@@ -33,7 +34,7 @@ public class NavigationServices extends AppCompatActivity
     public NavigationServices(){
 
     }
-
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +45,9 @@ public class NavigationServices extends AppCompatActivity
         createLocationListener();
     }
 
-
+*/
     public void start(){
+        getOutPut();
         mLatText.setText("start is called");
         mLonText.setText("start is called");
         //mGoogleApiClient.connect();
@@ -59,7 +61,7 @@ public class NavigationServices extends AppCompatActivity
     public void updateLocation() {
 
         if (!PermissionServices.IsPermissionGranted(LOCATION_PERMISSION_LIST)) {
-            PermissionServices.RequestPermissions(LOCATION_PERMISSION_LIST,LOCATION_PERMISSION_RESULT);
+            requestPermissions(LOCATION_PERMISSION_LIST,LOCATION_PERMISSION_RESULT);
             return;
         }
         mLastLocation = FusedLocationApi.getLastLocation(mGoogleApiClient);
@@ -72,10 +74,50 @@ public class NavigationServices extends AppCompatActivity
     }
 
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        TextView permission_result_text_view = (TextView) findViewById(R.id.permission_message);
+
+        String result_text = "";
+        switch (requestCode) {
+            case LOCATION_PERMISSION_RESULT: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PERMISSION_GRANTED) {
+
+                    for (int i = 0; i < permissions.length; i++) {
+                        result_text += permissions[i] + ":";
+                        if (grantResults[i] == PERMISSION_GRANTED) {
+                            result_text += "true ";
+                        } else {
+                            result_text += "false ";
+                        }
+                    }
+                    //_navigationServices.updateLocation();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    result_text = "permission not PERMISSION_GRANTED";
+                }
+                permission_result_text_view.setText(result_text);
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    /*
     private boolean isPermissionGranted() {
         return ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
     }
-
+*/
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         //possibly set text that says it's connected
