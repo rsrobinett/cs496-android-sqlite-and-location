@@ -5,31 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import static edu.oregonstate.rsrobinett.sqliteandlocation.Constants.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    PermissionServices permissionServices = new PermissionServices();
+    //PermissionServices permissionServices = new PermissionServices();
+
+    NavigationServices navigationServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+         navigationServices = new NavigationServices();
         /*
         ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS)
                 == PackageManager.PERMISSION_GRANTED);
         */
-
-        String[] permissionList = new String[]{
-                android.Manifest.permission.INTERNET,
-                android.Manifest.permission.ACCESS_NETWORK_STATE,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION,};
-
-        permissionServices.requestPermissions(permissionList);
-
-
 
         final Button button = (Button) findViewById(R.id.button_assignment);
         button.setOnClickListener(new View.OnClickListener() {

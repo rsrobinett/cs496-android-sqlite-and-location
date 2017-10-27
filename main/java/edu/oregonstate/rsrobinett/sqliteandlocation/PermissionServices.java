@@ -5,18 +5,40 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static edu.oregonstate.rsrobinett.sqliteandlocation.Constants.LOCATION_PERMISSION_RESULT;
 
 public class PermissionServices extends AppCompatActivity {
 
 
-    public void RequestPermissions(String[] permissionList) {
-        ActivityCompat.requestPermissions(this, permissionList, LOCATION_PERMISSION_RESULT);
+    private final NavigationServices _navigationServices;
+
+    public PermissionServices() {
+        _navigationServices = new NavigationServices();
     }
 
-    public int CheckPermissions(int permissionType){
-        ActivityCompat.checkSelfPermission(this, )
+    public void RequestPermissions(String[] permissionList, int requestCode) {
+        ActivityCompat.requestPermissions(this, permissionList, requestCode);
     }
+
+    public boolean IsPermissionGranted(String[] permissions){
+        if(CheckPermissions(permissions)==PERMISSION_GRANTED)
+            return true;
+        else
+            return false;
+    }
+
+    private int CheckPermissions(String[] permissions){
+        for (int i = 0; i<permissions.length; i++)
+             {
+                 if(ActivityCompat.checkSelfPermission(this, permissions[i])!= PERMISSION_GRANTED){
+                     return PERMISSION_DENIED;
+                 }
+             }
+             return PERMISSION_GRANTED;
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -29,19 +51,18 @@ public class PermissionServices extends AppCompatActivity {
             case LOCATION_PERMISSION_RESULT: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        && grantResults[0] == PERMISSION_GRANTED) {
 
                     for (int i = 0; i < permissions.length; i++) {
                         result_text += permissions[i] + ":";
-                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        if (grantResults[i] == PERMISSION_GRANTED) {
                             result_text += "true ";
                         } else {
                             result_text += "false ";
                         }
                     }
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                    _navigationServices.updateLocation();
 
                 } else {
 
