@@ -5,7 +5,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+//import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -30,10 +31,24 @@ public class NavigationServices extends AppCompatActivity
     private Location mLastLocation;
 
     public NavigationServices(){
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         getOutPut();
         getApiClient();
         createLocationRequest();
         createLocationListener();
+    }
+
+
+    public void start(){
+        mLatText.setText("start is called");
+        mLonText.setText("start is called");
+        //mGoogleApiClient.connect();
     }
 
     private void getOutPut() {
@@ -58,7 +73,7 @@ public class NavigationServices extends AppCompatActivity
 
 
     private boolean isPermissionGranted() {
-        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
     }
 
     @Override

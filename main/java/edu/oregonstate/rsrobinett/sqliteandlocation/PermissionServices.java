@@ -2,6 +2,7 @@ package edu.oregonstate.rsrobinett.sqliteandlocation;
 
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class PermissionServices extends AppCompatActivity {
     private int CheckPermissions(String[] permissions){
         for (int i = 0; i<permissions.length; i++)
              {
-                 if(ActivityCompat.checkSelfPermission(this, permissions[i])!= PERMISSION_GRANTED){
+                 if(ContextCompat.checkSelfPermission(this, permissions[i])!= PERMISSION_GRANTED){
                      return PERMISSION_DENIED;
                  }
              }

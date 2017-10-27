@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         navigationServices = new NavigationServices();
         /*
         ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS)
@@ -32,5 +31,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart(){
+        startActivity(new Intent(MainActivity.this, NavigationServices.class));
+        super.onStart();
+    }
+    /*
+    @Override
+    protected void onStart(){
+        navigationServices = new NavigationServices();
+        navigationServices.start();
+        super.onStart();
+    }
+    */
 }
 
