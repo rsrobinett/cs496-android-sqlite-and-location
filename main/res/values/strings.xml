@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SQLite and Location</string>
+    <string name="assignment"><div class="description user_content student-version enhanced"><p>This weeks assignment will have you implement a local android database that you write text and location information to. You will need to implement permission handling, location access and database access.</p>
+<p>App Requirements:</p>
+<p>There needs to be a text input field that the user can use to input text and a submit button.</p>
+<p>Upon hitting the submit button the text in the text field should be saved to a SQLite database. In addition to the text, the latitude and longitude where the phone was located should be saved along with it in the same row. In the event the user denied location access the latitude and longitude should be set to&#160;<span>44.5 and&#160;-123.2 respectively,&#160;the coordinates of OSU.</span></p>
+<p><span>So if permission to access location data was given, the current phone location should&#160;be used. If they were denied then the coordinates of OSU should be used.</span></p>
+<p><span>There should then be a list of all the rows that displays the text that was entered, the latitude and the longitude. This can be in the same activity as the one used to enter the data or it can be in a separate&#160;activity at your discretion.</span></p>
+<p><span>The deliverables &#160;for this assignment are a video, no longer than 5&#160;minutes (preferably more like 2 or 3), that shows the starting state of the data (probably an empty list).</span></p>
+<p><span>The user should then add 3 entries along with explicitly denying permission when it is requested. Those entries should then be shown in the table. Then the user should add 3 more entries, this time giving permission to use location data, changing the latitude and longitude for each entry. It should then show the table containing all 6 entries. With the latest 3 having the correct latitude and longitude data.</span></p>
+<p><span>Finally close the app and open it again to show that the data persisted. You should make sure you actually close the app, not just pause it. This can be done by hitting the \'square\' button that lists all the running apps, waiting a moment for the X to show up in the corner of the app, then hitting the X to close it. You can also force stop the app from settings.</span></p>
+<p><span>tl;dr Add three things without location permission, show it worked, add 3 things with location permission, show that all 6 things are there and that the last 3 had correct location data. Then close the app and open it again to show the data saved.</span></p>
+<p><span>In addition to the video please zip up your project file after removing the build directory and submit that as well.</span></p>
+<p><span>The database access and the location use will be weighted evenly. If you are unable to get the database access to work but can demonstrate that location data works, do so. Likewise if you are unable to get location data to work but can get the database to work, demonstrate that, either way you will still be able to earn half credit.</span></p></div></string>
+    <string name="hint_edit_message">Enter Text Here</string>
+    <string name="hint_button_save">Save</string>
+    <string name="hint_button_assignment">Assignment</string>
+    <string name="text_lable_current_longitude">Longitude</string>
+    <string name="text_label_current_latitude">Latitude</string>
+</resources>
