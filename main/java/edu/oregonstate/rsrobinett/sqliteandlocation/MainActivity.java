@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -22,6 +23,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.location.LocationServices.API;
 import static com.google.android.gms.location.LocationServices.FusedLocationApi;
 import static edu.oregonstate.rsrobinett.sqliteandlocation.Constants.*;
+import static edu.oregonstate.rsrobinett.sqliteandlocation.R.id.edit_message;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView mPermissionText;
     private LocationRequest mLocationRequest;
     private LocationListener mLocationListener;
+    private EditText mTextInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         createLocationRequest();
         createLocationListener();
 
-        final Button button = (Button) findViewById(R.id.button_assignment);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button_save = (Button) findViewById(R.id.button_save);
+        button_save.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
+                intent.putExtra("longitude", mLatText.getText());
+                intent.putExtra("latitude",mLonText.getText());
+                intent.putExtra("text",mTextInput.getText());
+                startActivity(intent);
+            }
+        });
+
+        final Button button_assignment = (Button) findViewById(R.id.button_assignment);
+        button_assignment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AssignmentActivity.class);
                 startActivity(intent);
@@ -54,16 +68,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     protected void onStart() {
-        getOutPutView();
+        getViewElements();
         mGoogleApiClient.connect();
         super.onStart();
 
     }
 
-    private void getOutPutView() {
+    private void getViewElements() {
         mLatText = (TextView) findViewById(R.id.current_latitude);
         mLonText = (TextView) findViewById(R.id.current_longitude);
         mPermissionText = (TextView) findViewById(R.id.permission_message);
+        mTextInput = (EditText) findViewById(edit_message);
     }
 
     @Override

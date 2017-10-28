@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.oregonstate.rsrobinett.sqliteandlocation.SQLiteActivity">
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_text_location_table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="edu.oregonstate.rsrobinett.androidui.TableLayoutActivity"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <TableRow style="@style/table_row_header">
+        <TextView style="@style/table_text"
+            android:text="Text" />
+        <TextView style="@style/table_text"
+            android:text="Longitude" />
+        <TextView style="@style/table_text"
+            android:text="Latitude" />
+    </TableRow>
+
+    <ListView
+        android:id="@+id/sql_list_view">
+    </ListView>
+
+</TableLayout>
+</android.support.constraint.ConstraintLayout>
