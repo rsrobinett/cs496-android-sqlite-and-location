@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         button_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
-                intent.putExtra("longitude", mLatText.getText());
-                intent.putExtra("latitude",mLonText.getText());
-                intent.putExtra("text",mTextInput.getText());
+                intent.putExtra("longitude", Double.parseDouble(mLatText.getText().toString()));
+                intent.putExtra("latitude",Double.parseDouble(mLonText.getText().toString()));
+                intent.putExtra("text",mTextInput.getText().toString());
                 startActivity(intent);
             }
         });
@@ -64,9 +64,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 startActivity(intent);
             }
         });
+
+        final Button button_view_list = (Button) findViewById(R.id.button_view_list);
+        button_view_list.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
+    protected void onRestart() {
+        mTextInput.setText(null);
+        super.onRestart();
+    }
+
+
+        @Override
     protected void onStart() {
         getViewElements();
         mGoogleApiClient.connect();
@@ -78,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         mLatText = (TextView) findViewById(R.id.current_latitude);
         mLonText = (TextView) findViewById(R.id.current_longitude);
         mPermissionText = (TextView) findViewById(R.id.permission_message);
-        mTextInput = (EditText) findViewById(edit_message);
+        mTextInput = (EditText) findViewById(R.id.edit_message);
     }
 
     @Override

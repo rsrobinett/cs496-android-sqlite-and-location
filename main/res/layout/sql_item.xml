@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <TableRow style="@style/table_row">
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/table">
+    <TableRow
+        style="@style/table_row">
         <TextView style="@style/table_text"
             android:id="@+id/text_column" />
         <TextView style="@style/table_text"

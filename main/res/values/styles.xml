@@ -8,9 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="table">
+        <item name="android:stretchColumns">*</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
     <style name="table_row">
         <item name="android:background">@color/colorPrimaryLight</item>
         <item name="android:padding">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 
     <style name="table_row_header" parent="table_row">
@@ -18,9 +27,7 @@
     </style>
 
     <style name="table_text">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+
     </style>
 
 </resources>
