@@ -84,7 +84,7 @@ final class DBContract {
         public static final String TEXT = "text";
         public static final String LONGITUDE = "longitude";
         public static final String LATITUDE = "latitude";
-        public static final int DB_VERSION = 6;
+        public static final int DB_VERSION = 14;
 
 
         public static final String CREATE_TEXT_AND_LOCATION_TABLE = "CREATE TABLE " +

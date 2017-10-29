@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 //updateLocation();
                 Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
-                intent.putExtra("longitude", Double.parseDouble(mLatText.getText().toString()));
-                intent.putExtra("latitude",Double.parseDouble(mLonText.getText().toString()));
+                intent.putExtra("longitude", Double.parseDouble(mLonText.getText().toString()));
+                intent.putExtra("latitude",Double.parseDouble(mLatText.getText().toString()));
                 intent.putExtra("text",mTextInput.getText().toString());
                 intent.putExtra("save",true);
                 startActivity(intent);
