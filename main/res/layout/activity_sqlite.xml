@@ -13,7 +13,6 @@
         tools:context="edu.oregonstate.rsrobinett.androidui.TableLayoutActivity"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     <TableRow style="@style/table_row_header">
@@ -28,6 +27,6 @@
     <ListView
         android:id="@+id/sql_list_view">
     </ListView>
-
 </TableLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -29,19 +28,25 @@ public class SQLiteActivity extends AppCompatActivity {
         mSQLiteDb = new SQLiteDb(this);
         mSQLDB = mSQLiteDb.getWritableDatabase();
 
-        Double newLongitude = getIntent().getDoubleExtra("longitude",Constants.DEFAULT_LONGITUDE);
-        Double newLatitude = getIntent().getDoubleExtra("latitude",Constants.DEFAULT_LATITUDE);
-        String newText = getIntent().getStringExtra("text");
+        boolean isSaveEvent = getIntent().getBooleanExtra("save", false);
 
-        ContentValues testValues = new ContentValues();
-        testValues.put(String.valueOf(DBContract.TextAndLocation.LATITUDE), newLatitude);
-        testValues.put(String.valueOf(DBContract.TextAndLocation.LONGITUDE), newLongitude);
-        testValues.put(DBContract.TextAndLocation.TEXT, newText);
+        if(isSaveEvent) {
+            Double newLongitude = getIntent().getDoubleExtra("longitude", Constants.DEFAULT_LONGITUDE);
+            Double newLatitude = getIntent().getDoubleExtra("latitude", Constants.DEFAULT_LATITUDE);
+            String newText = getIntent().getStringExtra("text");
 
+            ContentValues valuesToSave = new ContentValues();
+            valuesToSave.put(String.valueOf(DBContract.TextAndLocation.LATITUDE), newLatitude);
+            valuesToSave.put(String.valueOf(DBContract.TextAndLocation.LONGITUDE), newLongitude);
+            valuesToSave.put(DBContract.TextAndLocation.TEXT, newText);
+            try {
+                mSQLDB.insert(DBContract.TextAndLocation.TABLE_NAME, null, valuesToSave);
+            } catch (Exception e) {
+                d("DB Error", "Error Inserting In the Database");
+            }
+        }
 
         try {
-            mSQLDB.insert(DBContract.TextAndLocation.TABLE_NAME, null, testValues);
-
             if(mSQLCursorAdapter != null && mSQLCursorAdapter.getCursor() != null)
             {
                 if(!mSQLCursorAdapter.getCursor().isClosed()){
@@ -67,8 +72,6 @@ public class SQLiteActivity extends AppCompatActivity {
         }catch (Exception e){
             d("DB Error","Error loading data from Database");
         }
-
-
     }
 }
 
@@ -78,13 +81,13 @@ final class DBContract {
     public final class TextAndLocation implements BaseColumns {
         public static final String DB_NAME = "sqlite";
         public static final String TABLE_NAME = "location";
-        public static final String TEXT = "demo_string";
+        public static final String TEXT = "text";
         public static final String LONGITUDE = "longitude";
         public static final String LATITUDE = "latitude";
-        public static final int DB_VERSION = 1;
+        public static final int DB_VERSION = 6;
 
 
-        public static final String SQL_CREATE_DEMO_TABLE = "CREATE TABLE " +
+        public static final String CREATE_TEXT_AND_LOCATION_TABLE = "CREATE TABLE " +
                 TextAndLocation.TABLE_NAME + "(" + TextAndLocation._ID + " INTEGER PRIMARY KEY NOT NULL," +
                 TextAndLocation.TEXT + " VARCHAR(255)," +
                 TextAndLocation.LONGITUDE + " REAL," +
@@ -102,13 +105,14 @@ class SQLiteDb extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DBContract.TextAndLocation.SQL_CREATE_DEMO_TABLE);
-
+        db.execSQL(DBContract.TextAndLocation.CREATE_TEXT_AND_LOCATION_TABLE);
+/*
         ContentValues testValues = new ContentValues();
         testValues.put(String.valueOf(DBContract.TextAndLocation.LATITUDE), 42.00);
         testValues.put(String.valueOf(DBContract.TextAndLocation.LONGITUDE), -120.00);
         testValues.put(DBContract.TextAndLocation.TEXT, "Hello SQLite");
         db.insert(DBContract.TextAndLocation.TABLE_NAME,null,testValues);
+        */
     }
 
     @Override

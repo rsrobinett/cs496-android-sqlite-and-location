@@ -3,6 +3,7 @@ package edu.oregonstate.rsrobinett.sqliteandlocation;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -23,7 +24,6 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.location.LocationServices.API;
 import static com.google.android.gms.location.LocationServices.FusedLocationApi;
 import static edu.oregonstate.rsrobinett.sqliteandlocation.Constants.*;
-import static edu.oregonstate.rsrobinett.sqliteandlocation.R.id.edit_message;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient mGoogleApiClient;
     private TextView mLonText;
     private Location mLastLocation;
-    PermissionServices permissionServices;
     private TextView mPermissionText;
     private LocationRequest mLocationRequest;
     private LocationListener mLocationListener;
@@ -49,11 +48,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         final Button button_save = (Button) findViewById(R.id.button_save);
         button_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //updateLocation();
                 Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
                 intent.putExtra("longitude", Double.parseDouble(mLatText.getText().toString()));
                 intent.putExtra("latitude",Double.parseDouble(mLonText.getText().toString()));
                 intent.putExtra("text",mTextInput.getText().toString());
+                intent.putExtra("save",true);
                 startActivity(intent);
+
+                //new AsyncUpdateLocationAndSave().execute();
             }
         });
 
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         button_view_list.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
+                intent.putExtra("save",false);
                 startActivity(intent);
             }
         });
@@ -156,8 +161,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void updateLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionServices.RequestPermissions(LOCATION_PERMISSION_LIST,LOCATION_PERMISSION_RESULT);
-            setDefaultLocation();
+            ActivityCompat.requestPermissions(this, LOCATION_PERMISSION_LIST, LOCATION_PERMISSION_RESULT);
             return;
         }
         mLastLocation = FusedLocationApi.getLastLocation(mGoogleApiClient);
@@ -197,6 +201,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private class AsyncUpdateLocationAndSave extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... params) {
+            updateLocation();
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            Intent intent = new Intent(MainActivity.this, SQLiteActivity.class);
+            intent.putExtra("longitude", Double.parseDouble(mLatText.getText().toString()));
+            intent.putExtra("latitude",Double.parseDouble(mLonText.getText().toString()));
+            intent.putExtra("text",mTextInput.getText().toString());
+            intent.putExtra("save",true);
+            startActivity(intent);
+        }
     }
 }
 
